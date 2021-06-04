@@ -2,6 +2,8 @@
 
 require_relative "limpio/version"
 
+# Interface that defines the common behaviour of the
+# classes that include it.
 module Limpiable
   def blank_value?
     if respond_to? :empty?
