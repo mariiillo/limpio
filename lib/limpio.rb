@@ -2,10 +2,31 @@
 
 require_relative "limpio/version"
 
-class Hash
-  alias blank_value? empty?
+module DeepRejectable
+  def blank_value?
+    if respond_to? :empty?
+      empty?
+    else
+      false
+    end
+  end
 
-  def deep_reject_blank!
+  def deep_reject_blank!; end
+end
+
+String.prepend(DeepRejectable)
+Integer.prepend(DeepRejectable)
+Float.prepend(DeepRejectable)
+TrueClass.prepend(DeepRejectable)
+FalseClass.prepend(DeepRejectable)
+NilClass.include(DeepRejectable).tap do |klass|
+  klass.define_method(:blank_value?) do
+    true
+  end
+end
+
+Hash.include(DeepRejectable).tap do |klass|
+  klass.define_method(:deep_reject_blank!) do
     delete_if do |_key, value|
       value.deep_reject_blank!
       value.blank_value?
@@ -13,58 +34,11 @@ class Hash
   end
 end
 
-class Array
-  alias blank_value? empty?
-
-  def deep_reject_blank!
+Array.include(DeepRejectable).tap do |klass|
+  klass.define_method(:deep_reject_blank!) do
     delete_if do |element|
       element.deep_reject_blank!
       element.blank_value?
     end
-  end
-end
-
-class String
-  alias blank_value? empty?
-  def deep_reject_blank!; end
-end
-
-class NilClass
-  def deep_reject_blank!; end
-
-  def blank_value?
-    true
-  end
-end
-
-class TrueClass
-  def deep_reject_blank!; end
-
-  def blank_value?
-    false
-  end
-end
-
-class FalseClass
-  def deep_reject_blank!; end
-
-  def blank_value?
-    false
-  end
-end
-
-class Integer
-  def deep_reject_blank!; end
-
-  def blank_value?
-    false
-  end
-end
-
-class Float
-  def deep_reject_blank!; end
-
-  def blank_value?
-    false
   end
 end
