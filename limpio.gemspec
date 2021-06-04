@@ -10,15 +10,15 @@ Gem::Specification.new do |spec|
 
   spec.summary       = "Hash/Array cleaner"
   spec.description   = "Hash/Array cleaner"
-  spec.homepage      = "http://unknown.com/"
+  spec.homepage      = "https://github.com/mariiillo/limpio"
   spec.license       = "MIT"
   spec.required_ruby_version = Gem::Requirement.new(">= 3.0.0")
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "http://unknown.com/"
-  spec.metadata["changelog_uri"] = "http://unknown.com/"
+  spec.metadata["source_code_uri"] = "https://github.com/mariiillo/limpio"
+  spec.metadata["changelog_uri"] = "https://github.com/mariiillo/limpio"
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
