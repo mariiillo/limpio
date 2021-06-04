@@ -2,7 +2,7 @@
 
 require_relative "limpio/version"
 
-module DeepRejectable
+module Limpiable
   def blank_value?
     if respond_to? :empty?
       empty?
@@ -14,18 +14,18 @@ module DeepRejectable
   def deep_reject_blank!; end
 end
 
-String.prepend(DeepRejectable)
-Integer.prepend(DeepRejectable)
-Float.prepend(DeepRejectable)
-TrueClass.prepend(DeepRejectable)
-FalseClass.prepend(DeepRejectable)
-NilClass.include(DeepRejectable).tap do |klass|
+String.prepend(Limpiable)
+Integer.prepend(Limpiable)
+Float.prepend(Limpiable)
+TrueClass.prepend(Limpiable)
+FalseClass.prepend(Limpiable)
+NilClass.include(Limpiable).tap do |klass|
   klass.define_method(:blank_value?) do
     true
   end
 end
 
-Hash.include(DeepRejectable).tap do |klass|
+Hash.include(Limpiable).tap do |klass|
   klass.define_method(:deep_reject_blank!) do
     delete_if do |_key, value|
       value.deep_reject_blank!
@@ -34,7 +34,7 @@ Hash.include(DeepRejectable).tap do |klass|
   end
 end
 
-Array.include(DeepRejectable).tap do |klass|
+Array.include(Limpiable).tap do |klass|
   klass.define_method(:deep_reject_blank!) do
     delete_if do |element|
       element.deep_reject_blank!
